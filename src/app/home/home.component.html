@@ -1,0 +1,49 @@
+<div class="search">
+    <label>Search weather for
+        <input class="input" type="text" placeholder="Choose city" [(ngModel)]="weatherService.cityName" />
+        <button class="searchButton" (click)="getCity()">Go</button>
+    </label>
+</div>
+
+<body class="card" style="margin-bottom: 80px; ">
+    <div *ngIf="city">
+        <button *ngIf="!isSaved" id="button2" style="float: right" (click)="addToFavorites()"><i class="material-icons">
+                favorite_border
+            </i><br>Save city</button>
+        <button *ngIf="isSaved" id="button2" style="float: right" (click)="removeFromFavorites()"><i
+                class="material-icons">
+                favorite
+            </i><br>Saved</button>
+        <p style="float: left" class="title" style="text-align: left">{{city.LocalizedName}}
+            <br>
+            <label style="float: left" style="font-size: 17px"> Current weather
+                {{ currentWeather.LocalObservationDateTime | date: 'dd/MM'}}</label></p>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p id="WeatherText">{{currentWeather.WeatherText}}</p>
+        <label id="temperature">{{TemperatureValue}}</label>
+        <label [innerHTML]="unitType" style="font-size: 19px;"></label><br>
+        <button (click)="changeUnitType()">change to {{button}}</button>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+
+    <div>
+        <form *ngIf="fiveDaysForecasts" style="text-align: center">
+            <br>
+            <div *ngFor="let c of fiveDaysForecasts.DailyForecasts">
+                <mat-card class="example-card">
+                    <p style="font-size: 16px">{{c.Date | date: 'E'}} {{c.Date | date: 'dd/MM'}}</p>
+                    <label style="font-size: 14px">Day</label>
+                    <mat-card-title style="font-size: 26px">{{c.Temperature.Maximum.Value}}</mat-card-title>
+                    <label style="font-size: 14px">Night</label>
+                    <mat-card-title style="font-size: 18px">{{c.Temperature.Minimum.Value}}</mat-card-title>
+                </mat-card>
+            </div>
+        </form>
+    </div>
+</body>

@@ -1,0 +1,26 @@
+<p id="title">Your favorites</p>
+
+<h3 *ngIf="countOfCities == 0 || countOfCities == undefined"> You haven't chosen yet!</h3>
+
+<body>
+    <div *ngIf="isArrayFilled">
+        <div *ngFor="let c of favoritesCities; index as i">
+            <div (click)="getCuurentCity(c)">
+                <mat-card class="example-card">
+                    <mat-card-title class="id">id: {{c.Key}} </mat-card-title>
+                    <mat-card-title class="cityName"> {{c.LocalizedName}} </mat-card-title>
+                    <mat-card-content>
+                        <p *ngIf="isMetricValue" id="value">{{currentWeather[i].Temperature.Metric.Value}}℃</p>
+                        <p *ngIf="!isMetricValue" id="value">{{currentWeather[i].Temperature.Imperial.Value}}℉</p>
+                        <p id="text">{{currentWeather[i].WeatherText}}</p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button id="remove" (click)="removeFromFavorites(c)"><i class="material-icons">
+                                cancel
+                            </i></button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</body>

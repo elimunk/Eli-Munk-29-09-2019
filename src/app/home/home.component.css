@@ -1,0 +1,84 @@
+.card {
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    max-width: 85%;
+    height: 80vh;
+}
+
+button, #saved {
+    text-align: center;
+    padding: 8px 8px;
+    margin: auto;
+    background-color: rgb(255, 255, 255);
+    color: rgb(2, 68, 122);
+    text-decoration: none;
+    border: 0px;
+    cursor: pointer;
+    outline:none;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.material-icons {
+    font-size: 24px;
+    background-color: rgb(255, 255, 255);
+}
+
+.search, .title {
+    text-align: center;
+    font-size: 26px;
+    margin: 22px;
+}
+
+.searchButton, .input {
+    margin: 2px;
+    padding: 2px;
+    color: rgb(153, 155, 158);
+}
+
+.input {
+    max-width: 300px;
+    width: 100%;
+    border: 0.8px solid;
+    border-radius: 1 em;
+    padding: 8px;
+    /* border: 0 px; */
+}
+
+#WeatherText {
+    font-size: 50px;
+    margin: 8px;
+    padding: 8px;
+}
+
+#temperature {
+    font-size: 40px;
+    padding: 2px;
+    margin: 8px;
+}
+
+.example-card {
+    text-align: center;
+    width: 16%;
+    height: 18%;
+    margin: 6px;
+    float: left;
+}
+
+.title {
+    text-align: left;
+    font-size: 22px;
+}
+
+#seeFaiveDays {
+    font-size: 22px;
+    color: rgb(2, 68, 122);
+}
+
+#saved {
+    font-size: 13px;
+    margin-bottom: 15px;
+}

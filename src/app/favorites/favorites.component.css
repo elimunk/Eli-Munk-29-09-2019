@@ -1,0 +1,52 @@
+
+#title {
+    font-size: 26px;
+}
+
+div,
+h3,
+p {
+    text-align: center;
+}
+
+.example-card {
+    text-align: center;
+    width: 130px;
+    height:220px;
+    float: left;
+    margin: 6px;
+    cursor: pointer;
+}
+
+#text {
+    font-size: 24px;
+    padding: 0%;
+}
+
+#value {
+    font-size: 22px;
+}
+
+button {
+    text-align: center;
+    padding: 8px 8px;
+    margin: auto;
+    background-color: rgb(255, 255, 255);
+    color: rgb(2, 68, 122);
+    text-decoration: none;
+    border: 0px;
+    cursor: pointer;
+    outline:none;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+#remove {
+    float: inherit;
+}
+
+.id {
+    font-size: 11px;
+}

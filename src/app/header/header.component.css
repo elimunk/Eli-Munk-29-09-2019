@@ -1,0 +1,28 @@
+
+.title {
+    width: 100%;
+    text-align: center;
+    font-size: 32px;
+}
+
+.link {
+    cursor: pointer;
+    outline:none;
+}
+
+.example-icon {
+    padding: 0 11px;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.example-spacer2 {
+    flex: 5 5 initial;
+    ;
+}
+
+.toolbar {
+    position: sticky;
+}
