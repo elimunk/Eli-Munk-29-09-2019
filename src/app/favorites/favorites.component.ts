@@ -41,8 +41,8 @@ export class FavoritesComponent implements OnInit {
           this.favoritesCities = [];
           // Here we make sure that the error throws only once
           if (!isErrThrown) {
-            new handleError(err, this.snackBar);
             isErrThrown = true;
+            throw new handleError(err, this.snackBar);
           }
         });
     })
