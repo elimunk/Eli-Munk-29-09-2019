@@ -5,6 +5,8 @@ import { Location } from '@angular/common';
 import { WeatherService } from '../shared/services/weather.service';
 import { Weather } from '../shared/models/weather.model';
 import { Router } from '@angular/router';
+import { handleError } from '../shared/errorsHandler/handleError';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -20,35 +22,39 @@ export class FavoritesComponent implements OnInit {
   isArrayFilled: boolean;
   isMetricValue: boolean;
 
-  constructor(private weatherService: WeatherService, private favoritesService: FavoritesService, private location: Location, private router: Router) {
+  constructor(private weatherService: WeatherService, private favoritesService: FavoritesService, private snackBar: MatSnackBar, private location: Location, private router: Router) {
     this.currentWeather = new Array();
     this.isMetricValue = weatherService.isMetricValue;
   }
 
-  public getFavorites() {
-
+  getFavorites() {
     this.favoritesCities = this.favoritesService.getLocal();
-
+    let isErrThrown: boolean;
     this.favoritesCities.forEach(element => {
-      this.weatherService.getCurrentWeather(element.Key).subscribe(res => {
-        this.currentWeather.push(res[0]);
-      }, err => {
-        this.favoritesCities = [];
-        alert("Sorry, The service is currently unavailable. \n Please try again later");
-      });
+      this.weatherService.getCurrentWeather(element.Key).subscribe(
+        res => {
+          this.currentWeather.push(res[0]);
+          if (this.currentWeather.length == this.favoritesCities.length) {
+            this.isArrayFilled = true;
+          }
+        }, err => {
+          this.favoritesCities = [];
+          // Here we make sure that the error throws only once
+          if (!isErrThrown) {
+            new handleError(err, this.snackBar);
+            isErrThrown = true;
+          }
+        });
     })
-    if (this.currentWeather) {
-      this.isArrayFilled = true;
-    }
   }
 
-  public removeFromFavorites(city: City) {
+  removeFromFavorites(city: City) {
     this.favoritesService.removeFromFavorites(city);
     this.favoritesCities = this.favoritesService.getLocal();
     this.countOfCities = this.favoritesService.getCountItems();
   }
 
-  public getCuurentCity(city: City) {
+  getCuurentCity(city: City) {
     this.weatherService.cityName = city.LocalizedName;
     this.router.navigate(["/home"]);
   }

@@ -6,11 +6,12 @@
 </div>
 
 <body class="card" style="margin-bottom: 80px; ">
-    <div *ngIf="city">
-        <button *ngIf="!isSaved" id="button2" style="float: right" (click)="addToFavorites()"><i class="material-icons">
+    <div *ngIf="currentWeather">
+        <button *ngIf="!isCitySaved" id="button2" style="float: right" (click)="addToFavorites()"><i
+                class="material-icons">
                 favorite_border
             </i><br>Save city</button>
-        <button *ngIf="isSaved" id="button2" style="float: right" (click)="removeFromFavorites()"><i
+        <button *ngIf="isCitySaved" id="button2" style="float: right" (click)="removeFromFavorites()"><i
                 class="material-icons">
                 favorite
             </i><br>Saved</button>

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { City } from '../models/city.model';
-import { Weather } from '../models/weather.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +9,7 @@ export class FavoritesService {
   constructor() { }
 
   public addToFavorites(city: City) {
-
     let citiesArray = this.getLocal();
-
     if (citiesArray == null) {
       citiesArray = [];
     }

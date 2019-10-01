@@ -5,6 +5,8 @@ import { City } from '../shared/models/city.model';
 import { FavoritesService } from '../shared/services/favorites.service';
 import { Router } from '@angular/router';
 import { FiveDaysForecasts } from '../shared/models/fiveDaysForecasts.model';
+import { handleError } from "../shared/errorsHandler/handleError";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -17,70 +19,71 @@ export class HomeComponent implements OnInit {
   city: City;
   currentWeather: Weather;
   fiveDaysForecasts: FiveDaysForecasts;
-  isSaved: boolean;
+  isCitySaved: boolean;
   isFiveDays: Boolean;
   unitType: string;
   button: string;
   TemperatureValue: number;
 
-  constructor(public weatherService: WeatherService, private favoritesService: FavoritesService, private router: Router) {
+  constructor(private snackBar: MatSnackBar, public weatherService: WeatherService, private favoritesService: FavoritesService, private router: Router) {
     this.cityName = this.weatherService.cityName;
   }
 
-  public getCity() {
-
+  getCity() {
     this.cityName = this.weatherService.cityName;
-    this.weatherService.getCityData(this.cityName).subscribe(res => {
-      this.city = res[0];
-      if (this.city) {
-        this.isSaved = this.favoritesService.isCitySaved(this.city);
-        this.getCurrentWeather();
-        this.weatherService.cityName = '';
-      } else {
+    this.weatherService.getCityData(this.cityName).subscribe(
+      res => {
+        this.city = res[0];
+        if (this.city) {
+          this.isCitySaved = this.favoritesService.isCitySaved(this.city);
+          this.getCurrentWeather();
+        } else {
+          this.fiveDaysForecasts = null;
+          throw new handleError(`The city '${this.cityName}' not found! \n Please try again.`, this.snackBar);
+        }
+      }, err => {
+        throw new handleError(err, this.snackBar);
+      });
+  }
+
+  getCurrentWeather() {
+    this.weatherService.getCurrentWeather(this.city.Key).subscribe(
+      res => {
+        this.currentWeather = res[0];
+        this.changeTemperatureValue();
+        this.getFive();
+      }, err => {
+        this.city = null;
         this.fiveDaysForecasts = null;
-        alert(`The city '${this.cityName}' not found! \n Please try again`);
-      }
-    }, err => {
-      alert("Sorry, The service is currently unavailable. \n Please try again later");
-    });
+        throw new handleError(err, this.snackBar);
+      })
   }
 
-  public getCurrentWeather() {
-    this.weatherService.getCurrentWeather(this.city.Key).subscribe(res => {
-      this.currentWeather = res[0];
-      this.changeTemperatureValue();
-      this.getFive();
-    }, err => {
-      this.city = null;
-      this.fiveDaysForecasts = null;
-      alert("Sorry, The service is currently unavailable. \n Please try again later");
-    })
+  getFive() {
+    this.weatherService.getFiveDaysOfDailyForecasts(this.city.Key).subscribe(
+      res => {
+        this.fiveDaysForecasts = res;
+        this.isFiveDays = true;
+      }, err => {
+        this.currentWeather = null;
+        this.city = null;
+        this.fiveDaysForecasts = null;
+        throw new handleError(err, this.snackBar);
+      })
   }
 
-  public getFive() {
-    this.weatherService.getFiveDaysOfDailyForecasts(this.city.Key).subscribe(res => {
-      this.fiveDaysForecasts = res;
-      this.isFiveDays = true;
-    }, err => {
-      this.currentWeather = null;
-      this.city = null;
-      this.fiveDaysForecasts = null;
-      alert("Sorry, The service is currently unavailable. \n Please try again later");
-    })
-  }
-
-  public addToFavorites() {
+  addToFavorites() {
     this.favoritesService.addToFavorites(this.city);
-    this.isSaved = this.favoritesService.isCitySaved(this.city);
+    this.isCitySaved = this.favoritesService.isCitySaved(this.city);
   }
 
-  public goToFavorites() {
+  goToFavorites() {
     this.router.navigate(["/favorites"]);
   }
 
-  public removeFromFavorites() {
+  removeFromFavorites() {
     this.favoritesService.removeFromFavorites(this.city);
-    this.isSaved = this.favoritesService.isCitySaved(this.city);
+    this.isCitySaved = this.favoritesService.isCitySaved(this.city);
   }
 
   changeUnitType() {
@@ -106,7 +109,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.getCity();
-    this.isSaved = this.favoritesService.isCitySaved(this.city);
+    this.isCitySaved = this.favoritesService.isCitySaved(this.city);
   }
 
 }

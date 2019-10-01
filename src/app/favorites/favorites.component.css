@@ -1,18 +1,15 @@
-
 #title {
     font-size: 26px;
 }
 
-div,
-h3,
-p {
+div, h3, p {
     text-align: center;
 }
 
 .example-card {
     text-align: center;
     width: 130px;
-    height:220px;
+    height: 220px;
     float: left;
     margin: 6px;
     cursor: pointer;
@@ -36,7 +33,7 @@ button {
     text-decoration: none;
     border: 0px;
     cursor: pointer;
-    outline:none;
+    outline: none;
 }
 
 button:hover {

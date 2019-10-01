@@ -15,7 +15,7 @@ button, #saved {
     text-decoration: none;
     border: 0px;
     cursor: pointer;
-    outline:none;
+    outline: none;
 }
 
 button:hover {

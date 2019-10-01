@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Weather } from '../models/weather.model';
 import { City } from '../models/city.model';
 import { FiveDaysForecasts } from '../models/fiveDaysForecasts.model';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WeatherService {
 
-  readonly myApiKey: string = "eRkjBAnGavZqTZ5PB069hnoPXevEq0Lj";
+  readonly myApiKey: string = "I9N5uqsitJAfTaCO5egA1bqMQ9oh2QSq";
   cityName: string = 'tel aviv';
   isMetricValue: boolean = true;
 
